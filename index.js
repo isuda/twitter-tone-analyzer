@@ -16,6 +16,7 @@ var getTone   = Promise.promisify(toneAnalyzer.tone, {context: toneAnalyzer});
 
 app.use('/', express.static(__dirname + '/public'));
 app.use('/scripts', express.static(__dirname + '/node_modules/chart.js/dist'));
+app.use('/scripts', express.static(__dirname + '/node_modules/moment/min'));
 
 app.get('/tone/:hashtag', function (req, res) {
   getTweets('search/tweets', {q: req.params.hashtag})
