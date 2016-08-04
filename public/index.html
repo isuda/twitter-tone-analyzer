@@ -16,8 +16,13 @@
         return response.json();
       })
       .then(function(json) {
-        var main = document.getElementById('main');
-        main.innerHTML = JSON.stringify(json);
+        json.results.forEach(function(tone) {
+          tone.date = moment(tone.date);
+        });
+        return json.results;
+      })
+      .then(function(toneResults) {
+        console.log(toneResults);
       });
 
     </script>
