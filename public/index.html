@@ -7,7 +7,7 @@
     <h1>Twitter Tone Analyzer</h1>
 
     <main id="main">
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <canvas id="myChart" width="400" height="200"></canvas>
     </main>
 
     <script src="scripts/Chart.bundle.min.js"></script>
@@ -17,8 +17,7 @@
         return response.json();
       })
       .then(function(json) {
-        var main = document.getElementById('main');
-        //main.innerHTML = JSON.stringify(json);
+        console.log(json);
       });
 
       //Copied from codepen
@@ -31,9 +30,11 @@
         { joy: -0.1, happiness: -0.2, time: 5 }
       ];
 
-      var xLabels = testData.map(function(e) { return {x: e.time, y:e.happiness} });
+      var xLabels = testData.map(function(e) { return e.time });
       var happinessData = testData.map(function(e) { return {x: e.time, y:e.happiness} });
       var joyData = testData.map(function(e) { return {x: e.time, y:e.joy} });
+
+      var colours = ['#004358', '#1F8A70', '#BEDB39', '#FFE11A', '#FD7400'];
 
       var ctx = document.getElementById("myChart").getContext("2d");
       var myChart = new Chart(ctx, {
@@ -46,14 +47,14 @@
               data: happinessData,
               borderWidth: 1,
               fill: false,
-              borderColor: 'red'
+              borderColor: colours[0]
             },
             {
               label: 'Joy',
               data: joyData,
               borderWidth: 1,
               fill: false,
-              borderColor: 'blue'
+              borderColor: colours[1]
             }
           ]
         },
@@ -61,7 +62,7 @@
           scales: {
             yAxes: [{
               ticks: {
-                min: -1,
+                min: 0,
                 max: 1
               }
             }]
