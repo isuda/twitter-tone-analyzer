@@ -15,6 +15,8 @@ var getTweets = Promise.promisify(client.get, {context: client});
 var getTone   = Promise.promisify(toneAnalyzer.tone, {context: toneAnalyzer});
 
 app.use('/', express.static(__dirname + '/public'));
+app.use('/scripts', express.static(__dirname + '/node_modules/chart.js/dist'));
+
 app.get('/tone/:hashtag', function (req, res) {
   getTweets('search/tweets', {q: req.params.hashtag})
     .then(function(tweets) {

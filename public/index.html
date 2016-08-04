@@ -5,5 +5,20 @@
   </head>
   <body>
     <h1>Twitter Tone Analyzer</h1>
+
+    <main id="main"></main>
+
+    <script src="scripts/Chart.bundle.min.js"></script>
+    <script type="text/javascript">
+    fetch('tone/cascadia16')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(json) {
+        var main = document.getElementById('main');
+        main.innerHTML = JSON.stringify(json);
+      });
+
+    </script>
   </body>
 </html>
