@@ -1,0 +1,22 @@
+var config = {
+  hashtag: 'cascadia16',
+
+  auth: {
+    watson: {
+      tone_analyzer: {
+        username: '123abc',
+        password: '123abc',
+        version_date: '2016-05-19'
+      }
+    },
+
+    twitter: {
+      consumer_key: '123abc',
+      consumer_secret: '123abc',
+      access_token_key: '123abc',
+      access_token_secret: '123abc'
+    }
+  }
+};
+
+module.exports = config;

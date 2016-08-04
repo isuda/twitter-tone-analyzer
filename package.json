@@ -1,0 +1,17 @@
+{
+  "name": "watson",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "twitter": "^1.4.0",
+    "watson-developer-cloud": "^2.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ian Suda & Adam Vernon",
+  "license": "MIT"
+}
