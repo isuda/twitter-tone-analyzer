@@ -11,63 +11,70 @@
     </main>
 
     <script src="scripts/Chart.bundle.min.js"></script>
+    <script src="scripts/moment.min.js"></script>
     <script type="text/javascript">
     fetch('tone/cascadia16')
       .then(function(response) {
         return response.json();
       })
       .then(function(json) {
-        console.log(json);
-      });
+        json.results.forEach(function(tone) {
+          tone.date = moment(tone.date);
+        });
+        return json.results;
+      })
+      .then(function(toneResults) {
+        var testData = toneResults.reduce(function(p, c, i) {
+          var joy = c.tone.document_tone.tone_categories[0].tones.filter(function(t) {
+            return t.tone_id === 'joy';
+          })[0];
 
-      //Copied from codepen
-      var testData = [
-        { joy: 1.1, happiness: 1, time: 0 },
-        { joy: 0.85, happiness: 0.8, time: 1 },
-        { joy: 0.5, happiness: 0.5, time: 2 },
-        { joy: 0.11, happiness: 0.1, time: 3 },
-        { joy: 0.05, happiness: -0.4, time: 4 },
-        { joy: -0.1, happiness: -0.2, time: 5 }
-      ];
+          var happiness = c.tone.document_tone.tone_categories[2].tones.filter(function(t) {
+            return t.tone_id === 'openness_big5';
+          })[0];
+          p.push({joy: joy.score, happiness: happiness.score, time: i});
+          return p;
+        }, []);
 
-      var xLabels = testData.map(function(e) { return e.time });
-      var happinessData = testData.map(function(e) { return {x: e.time, y:e.happiness} });
-      var joyData = testData.map(function(e) { return {x: e.time, y:e.joy} });
+        var xLabels = testData.map(function(e) { return e.time });
+        var happinessData = testData.map(function(e) { return {x: e.time, y:e.happiness} });
+        var joyData = testData.map(function(e) { return {x: e.time, y:e.joy} });
 
-      var colours = ['#004358', '#1F8A70', '#BEDB39', '#FFE11A', '#FD7400'];
+        var colours = ['#004358', '#1F8A70', '#BEDB39', '#FFE11A', '#FD7400'];
 
-      var ctx = document.getElementById("myChart").getContext("2d");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: xLabels,
-          datasets: [
-            {
-              label: 'Happiness',
-              data: happinessData,
-              borderWidth: 1,
-              fill: false,
-              borderColor: colours[0]
-            },
-            {
-              label: 'Joy',
-              data: joyData,
-              borderWidth: 1,
-              fill: false,
-              borderColor: colours[1]
-            }
-          ]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                min: 0,
-                max: 1
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: xLabels,
+            datasets: [
+              {
+                label: 'Happiness',
+                data: happinessData,
+                borderWidth: 1,
+                fill: false,
+                borderColor: colours[0]
+              },
+              {
+                label: 'Joy',
+                data: joyData,
+                borderWidth: 1,
+                fill: false,
+                borderColor: colours[1]
               }
-            }]
+            ]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0,
+                  max: 1
+                }
+              }]
+            }
           }
-        }
+        });
       });
 
     </script>
